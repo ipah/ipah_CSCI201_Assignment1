@@ -1,0 +1,43 @@
+package ipah_CSCI201L_Assignment1;
+
+import  java.util.Scanner;
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args){
+		System.out.println("Please enter the number of teams that will be playing this game.");
+		
+		Scanner num = new Scanner(System.in);
+		String num_teams = num.nextLine();
+		
+		while(!num_teams.equals("1") && !num_teams.equals("2") && !num_teams.equals("3") && !num_teams.equals("4") ){
+			
+			System.out.println("Please enter a valid number of teams.");
+			
+			System.out.println("Please enter the number of teams that will be playing this game.");
+			num = new Scanner(System.in);
+			num_teams = num.nextLine();
+			
+			
+		}
+		
+		System.out.println("There are " + num_teams + " teams playing Jeopardy.");
+		num.close();
+		int team_integer = Integer.parseInt(num_teams);
+		
+		String name = "";
+		
+		for(int i = 1; i <team_integer+1; i++){
+			System.out.println("Please choose a name for Team " + i + ".");
+			Scanner team = new Scanner(System.in);
+			name = team.nextLine();
+			
+			System.out.println(name);
+			team.close();
+		}
+			
+			
+		
+		
+	}
+
+}

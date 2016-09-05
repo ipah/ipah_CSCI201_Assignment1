@@ -1,0 +1,126 @@
+package ipah_CSCI201L_Assignment1;
+
+import  java.util.Scanner;
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args){
+		Jeopardy_Game game = new Jeopardy_Game();
+		
+		
+		System.out.println("Please enter the number of teams that will be playing this game.");
+		
+		Scanner response = new Scanner(System.in);
+		
+		String num_teams; 
+		
+		num_teams= response.nextLine();
+		if(num_teams.equals("exit") || num_teams.equals("replay") ){
+			System.out.println("Game Over...Restarting.");
+			response.close();
+			return;
+			//ends game. possibly have a Game class and a restart function
+		}
+		
+		
+		
+		
+		while(!num_teams.equals("1") && !num_teams.equals("2") && !num_teams.equals("3") && !num_teams.equals("4") ){
+			
+			System.out.println("Please enter a valid number of teams.");
+			
+			System.out.println("Please enter the number of teams that will be playing this game.");
+			response = new Scanner(System.in);
+			num_teams = response.nextLine();
+			if(num_teams.equals("exit") || num_teams.equals("replay") ){
+				System.out.println("Game Over...Restarting.");
+				response.close();
+				return;
+				//ends game. possibly have a Game class and a restart function
+			}
+			
+			
+		}
+		//Jeopardy_Teams team_name = new Jeopardy_Teams();
+		 
+		
+				
+		System.out.println("There are " + num_teams + " teams playing Jeopardy.");
+		
+		int team_integer = Integer.parseInt(num_teams);
+		game.setNumOfTeams(team_integer);
+		//Jeopardy_Teams arr[] = new Jeopardy_Teams[team_integer]; // array that holds teams. 
+		
+		String name;
+		
+		for(int i = 1; i <team_integer+1; i++){
+			
+			System.out.println("Please choose a name for Team " + i + ".");
+			
+			name = response.nextLine();
+			if(name.equals("exit") || name.equals("replay") ){
+				System.out.println("Game Over...Restarting.");
+				response.close();
+				return;
+				//ends game. possibly have a Game class and a restart function
+			}
+			
+			
+			int correct_index = i-1; //to get the correct index for arr since 'i' starts at 1
+			game.addTeamToGame(correct_index, name);
+			
+			
+			/*arr[correct_index] = new Jeopardy_Teams(); //creates a team
+			arr[correct_index].setName(name);// respective team name*/
+			
+			
+			System.out.println("Team " + i+ " your name is: " + name);
+			
+		}
+			
+		response.close();
+		
+	}
+	
+	
+	
+	
+	
+}
+class Jeopardy_Game {// creates game
+	private int numberOfTeams;
+	private Jeopardy_Teams team_holder[]; //array that holds teams.
+	public void setNumOfTeams(int num){
+		numberOfTeams = num;
+		team_holder = new Jeopardy_Teams[numberOfTeams];
+	}
+	public void addTeamToGame(int index, String name){ //adds teams to array and sets team names
+		team_holder[index] = new Jeopardy_Teams();
+		team_holder[index].setName(name);
+	}
+	public void printAll(){
+		for(int i =0; i < numberOfTeams; i++){
+			team_holder[i].printTeamInfo();
+		}
+	}
+}
+	
+class Jeopardy_Teams {
+	private String team_name;
+	private int team_score = 0;
+	
+	public void setName(String name){
+		team_name = name;
+	}
+	public int getScore(){
+		return team_score;
+	}
+	
+	public void changeScore(int change){
+		team_score += change;
+	}
+	public void printTeamInfo(){//prints out name and score of a team. 
+		System.out.println(team_name+ ": " + team_score);
+		
+	}
+	
+}

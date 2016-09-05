@@ -1,0 +1,30 @@
+package ipah_CSCI201L_Assignment1;
+
+public class FinalJeopardyQuestion {
+	private String question; 
+	private String answer;
+	
+	private String guessAns; //answer that teams guess
+	
+	
+	public void setGuess(String g){
+		guessAns = g;
+	}
+	public String getGuess(){
+		return guessAns;
+	}
+	public void setFJQuestion(String q){
+		question = q;
+	}
+	public void setFJAnswer(String a){
+		answer = a;
+	}
+	public String getFJQuestion(){
+		return question;
+	}
+	
+	public String getFJAnswer(){
+		return answer;
+	}
+	
+}

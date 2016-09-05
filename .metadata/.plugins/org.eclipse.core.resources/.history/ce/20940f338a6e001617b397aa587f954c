@@ -1,0 +1,20 @@
+package ipah_CSCI201L_Assignment1;
+
+
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args){
+		Jeopardy_Game game = new Jeopardy_Game();
+		
+		game.startGame();
+		
+		
+		game.printAll();
+			
+		
+		
+	}
+
+}
+
+

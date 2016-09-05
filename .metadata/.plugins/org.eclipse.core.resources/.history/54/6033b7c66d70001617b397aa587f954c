@@ -1,0 +1,20 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.io.FileNotFoundException;
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args) throws FileNotFoundException{
+		Jeopardy_Game game = new Jeopardy_Game();
+		
+		game.startGame(); //starts prompt
+		
+		
+		game.printAll();
+			
+		
+		
+	}
+
+}
+
+

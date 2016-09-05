@@ -1,0 +1,5 @@
+package ipah_CSCI201L_Assignment1;
+
+public class Categories {
+	HashMap<Integer, Questions> scoreToQuestion = new HashMap<Integer, Questions>();
+}

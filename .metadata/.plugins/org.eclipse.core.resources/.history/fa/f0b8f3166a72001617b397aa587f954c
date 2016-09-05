@@ -1,0 +1,32 @@
+package ipah_CSCI201L_Assignment1;
+
+
+import java.util.Vector;
+
+public class Categories {
+	
+	//list of questions in the category
+	private Vector<Questions> vec = new Vector<Questions>(); 
+	String categoryName; 
+	
+	public void addQuestions(Questions q){
+		vec.addElement(q);
+	}
+	
+	public  Categories(String name){ //constructor that creates categ. with spec. name
+		categoryName = name;
+	}
+	public String getCategoryName(){
+		return categoryName;
+	}
+	
+	public boolean isFinished(){
+		for(int i =0; i < vec.size(); i++){
+			if(vec.get(i).questionUsed()){
+				return true;
+			}
+		}
+		return false;
+	}
+		
+}

@@ -1,0 +1,49 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.util.HashMap;
+
+public class Questions {
+	private String score;
+	private String question;
+	private String answer;
+	private HashMap<String, String> scoreToQuestion = new HashMap<String, String>();
+	private boolean beenAsked = false; //when question is asked this becomes true.
+	public void makeQuestions(String sc, String q, String ans){
+		score = sc;
+		question = q;
+		answer = ans;
+		
+		scoreToQuestion.put(sc,q);
+	}
+	public boolean questionUsed(){
+		return beenAsked;
+	}
+	public void makeFJQuest(String q, String ans){
+		question = q;
+		answer = ans;
+	}
+	
+	public void finalJeopardy(String q, String ans ){
+		question = q;
+		answer = ans;
+	}
+	public void setQuestion(String q){
+		question = q;
+	}
+	
+	public void setAnswer(String ans){
+		answer = ans;
+	}
+	
+	public String getQuestionName(){
+		return question;
+	}
+	public String getAnswer(){
+		return answer;
+	}
+	
+	public String getScore(){
+		return score;
+	}
+	
+}

@@ -1,0 +1,29 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args){
+		Jeopardy_Game game = new Jeopardy_Game();
+		
+		Scanner sc = new Scanner(System.in);
+		
+//		System.out.println(args[0]);
+		try {
+			game.startGame("Test1.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //starts prompt
+		
+		System.out.println(args[0]);
+		game.printAll();
+			
+		
+		
+	}
+
+}
+
+

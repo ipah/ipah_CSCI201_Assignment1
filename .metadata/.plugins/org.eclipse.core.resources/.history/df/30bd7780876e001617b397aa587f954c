@@ -1,0 +1,10 @@
+package ipah_CSCI201L_Assignment1;
+
+import  java.util.Scanner;
+
+public class File_reader { //reads file
+	
+	File_reader(String file){
+		Scanner scanner = new Scanner(file);
+	}
+}

@@ -1,0 +1,37 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.util.HashMap;
+
+public class Questions {
+	private String score;
+	private String question;
+	private String answer;
+	private HashMap<Integer, Questions> scoreToQuestion = new HashMap<Integer, Questions>();
+	
+	public Questions(String sc, String q, String ans){
+		score = sc;
+		question = q;
+		answer = ans;
+		
+		
+	}
+	public void setQuestion(String q){
+		question = q;
+	}
+	
+	public void setAnswer(String ans){
+		answer = ans;
+	}
+	
+	public String getQuestion(){
+		return question;
+	}
+	public String getAnswer(){
+		return answer;
+	}
+	
+	public String getScore(){
+		return score;
+	}
+	
+}

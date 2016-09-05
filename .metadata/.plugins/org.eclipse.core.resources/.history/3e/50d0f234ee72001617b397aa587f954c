@@ -1,0 +1,24 @@
+package ipah_CSCI201L_Assignment1;
+
+public class Jeopardy_Teams {
+	private String team_bet;//amount that team bets for FJ
+	private String team_name;
+	private int team_score = 0;
+	
+	public void setName(String name){
+		team_name = name;
+	}
+	public int getScore(){
+		return team_score;
+	}
+	public String getName(){
+		return team_name;
+	}
+	public void changeScore(int change){
+		team_score += change; 
+	}
+	public void printTeamInfo(){//prints out name and score of a team. 
+		System.out.println(team_name+ ": " + team_score);
+		
+	}
+}

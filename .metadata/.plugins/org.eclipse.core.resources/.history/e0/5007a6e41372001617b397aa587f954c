@@ -1,0 +1,15 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.util.HashMap;
+
+public class Categories {
+	HashMap<Integer, Questions> scoreToQuestion = new HashMap<Integer, Questions>();
+	String categoryName; 
+	public  Categories(String name){ //constructor that creates categ. with spec. name
+		categoryName = name;
+	}
+	public String getCategory(){
+		return categoryName;
+	}
+		
+}

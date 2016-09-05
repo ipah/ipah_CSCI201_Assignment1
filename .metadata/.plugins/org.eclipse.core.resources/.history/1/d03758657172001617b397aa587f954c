@@ -1,0 +1,232 @@
+package ipah_CSCI201L_Assignment1;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Jeopardy_Game {
+	private String fileName; 
+	
+	
+	public void startGame(String file) throws FileNotFoundException{//displays first prompts
+		
+		fileName = file;
+		
+		Scanner response = new Scanner(System.in);
+		
+		File_reader(fileName);
+		
+		System.out.println("Please enter the number of teams that will be playing this game.");
+				
+		String num_teams; 
+		
+		num_teams= response.nextLine();
+		if(num_teams.equals("exit") || num_teams.equals("replay") ){
+			System.out.println("Game Over...Restarting.");
+			response.close();
+			return;
+			//ends game. possibly have a Game class and a restart function
+		}
+		
+		
+		
+		
+		while(!num_teams.equals("1") && !num_teams.equals("2") && !num_teams.equals("3") && !num_teams.equals("4") ){
+			
+			System.out.println("Please enter a valid number of teams.");
+			
+			System.out.println("Please enter the number of teams that will be playing this game.");
+			response = new Scanner(System.in);
+			num_teams = response.nextLine();
+			if(num_teams.equals("exit") || num_teams.equals("replay") ){
+				System.out.println("Game Over...Restarting.");
+				response.close();
+				return;
+				//ends game. possibly have a Game class and a restart function
+			}
+			
+			
+		}
+					
+		System.out.println("There are " + num_teams + " teams playing Jeopardy.");
+		
+		int team_integer = Integer.parseInt(num_teams);
+		setNumOfTeams(team_integer);
+				
+		String name;
+		
+		for(int i = 1; i <team_integer+1; i++){
+			
+			System.out.println("Please choose a name for Team " + i + ".");
+			
+			name = response.nextLine();
+			if(name.equals("exit") || name.equals("replay") ){
+				System.out.println("Game Over...Restarting.");
+				response.close();
+				return;
+				//ends game. possibly have a Game class and a restart function
+			}
+			
+			
+			int correct_index = i-1; //to get the correct index for arr since 'i' starts at 1
+			addTeamToGame(correct_index, name);
+			
+			
+			System.out.println("Team " + i+ " your name is: " + name);
+			
+			
+			//randomly chooses which team will start first
+			Random random = new Random();
+			int start_team = random.nextInt(team_integer - 1 + 1) + 1; // team that will start first
+			System.out.println(start_team);
+			
+			
+		}
+	}
+	
+	
+	//FILE READER
+	
+	public void File_reader(String fileName) throws FileNotFoundException{
+		//Scanner scanner = new Scanner(System.in);
+	
+		File f = new File(fileName);
+		Scanner scanner = new Scanner(f);
+		String[] catSplit;
+		String[] srcSplit; 
+		//Reads and stores categories
+		catSplit = scanner.nextLine().split("::");
+		
+		if(catSplit.length != 5){
+			System.out.println("ERROR:Invalid number of categories.");
+			scanner.close();
+			return;
+		}
+		else{
+			for(int i =0; i< catSplit.length; i++){
+				Categories new_cat = new Categories(catSplit[i]); 
+				categories.addElement(new_cat); 
+			}
+		}
+		
+		//Reads and stores points
+		srcSplit = scanner.nextLine().split("::");
+	
+		if(srcSplit.length != 5){
+			System.out.println("ERROR:Invalid number of categories.");
+			scanner.close();
+			return;
+		}
+		else{
+			for(int i =0; i< srcSplit.length; i++){
+				pointVals[i] = srcSplit[i];
+			}
+		}
+		
+		//Reads rest of file
+		while(scanner.hasNextLine()){
+			String[] split = scanner.nextLine().split("::");
+			//split[1] = category; 2 = score; 3 = question; 4 = answer
+			
+			if( isCategory(split[1])  && isScore(split[2]) ){
+				//System.out.println(split[1]);				//then should make question
+				Questions q = new Questions();
+				q.makeQuestions(split[2], split[3], split[4]);
+				getCategory(split[1]).addQuestions(q); 
+			}
+			
+			else if(split[1].equals("FJ") ){// final Jeopardy 
+				//create final jeopardy question
+				Categories finalJ = new Categories(split[1]);
+				categories.addElement(finalJ);
+				Questions fj = new Questions();
+				fj.makeFJQuest(split[2],split[3]);
+				getCategory(split[1]).addQuestions(fj);								
+			}	
+		}	
+		scanner.close();
+	}
+	
+	
+	//TEAMS 
+	private int numberOfTeams;
+	private Vector<Jeopardy_Teams> team_holder = new Vector<Jeopardy_Teams>();; //array that holds teams.
+
+	public void setNumOfTeams(int num){
+		numberOfTeams = num;
+		
+	}
+	public void addTeamToGame(int index, String name){ //adds teams to array and sets team names
+		Jeopardy_Teams new_team = new Jeopardy_Teams();
+		new_team.setName(name);
+		team_holder.addElement(new_team);
+		
+	}
+	public void printAll(){
+		for(int i =0; i < numberOfTeams; i++){
+			team_holder.get(i).printTeamInfo();
+		}
+		System.out.println(categories.size());
+		for(int i = 0; i < categories.size(); i++){
+			System.out.println(categories.get(i).getCategoryName());
+		}
+	}
+	//GAME QUESTIONS/CATEGORIES
+	//-array of the five categories
+	//-array off
+	
+	private Vector<Categories> categories = new Vector<Categories>();
+	private String[] pointVals = new String[5];
+	
+	public boolean categoryFinished(String c){ //checks to see if there are available questions in category
+		return getCategory(c).isFinished();
+	}
+	public boolean isCategory(String category){
+		
+		//System.out.println("passed in" + category);
+		
+		for(int i = 0; i < categories.size(); i++){
+			//System.out.println("indexed" + categories.get(i).getCategoryName());
+			if(categories.get(i).getCategoryName().equals(category)){
+				//System.out.println("true");
+				return true;
+			}						
+		}
+		//System.out.println("false");
+		return false; 
+	}
+	
+	public Categories getCategory(String c){ //returns index
+		
+		for(int i = 0; i < categories.size(); i++){
+			if(categories.get(i).getCategoryName().equals(c)){
+				return categories.get(i);
+			}
+		}
+		return null;
+		
+		
+	}
+	
+	public boolean isScore(String score){
+		//System.out.println(score);
+		for(int i = 0; i<pointVals.length; i++){
+			if( pointVals[i].equals(score)){
+				//System.out.println("true");
+				return true;
+			}
+		}
+		//System.out.println("false");
+		return false;
+	}
+	public void addCategories(Categories cat){
+		categories.addElement(cat);
+	}
+	public void setPointVals(String[] vals){
+		pointVals = vals; 
+	}
+	
+	
+}

@@ -1,0 +1,8 @@
+package ipah_CSCI201L_Assignment1;
+
+public class Jeopardy_hw1 {
+	public static void main(String [] args){
+		System.out.println("Please enter the number of teams that will be playing this game.");
+	}
+
+}

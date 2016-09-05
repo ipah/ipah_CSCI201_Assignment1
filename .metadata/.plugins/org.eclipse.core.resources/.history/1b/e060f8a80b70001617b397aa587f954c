@@ -1,0 +1,23 @@
+package ipah_CSCI201L_Assignment1;
+
+import  java.util.Scanner;
+
+public class File_reader { //reads file
+	
+	File_reader(String file){
+		Scanner scanner = new Scanner(file);
+		
+		while(scanner.hasNextLine()){
+			String[] split = scanner.nextLine().split("::");
+			if(split.length != 5){
+				System.out.println("ERROR:Invalid number of categories.");
+			}
+		}
+		
+		
+		
+		scanner.close();
+	}
+	
+	
+}

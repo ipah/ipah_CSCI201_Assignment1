@@ -1,0 +1,14 @@
+package ipah_CSCI201L_Assignment1;
+
+public class Questions {
+	private String question;
+	private String answer;
+	
+	public void setQuestion(String q){
+		question = q;
+	}
+	
+	public void setAnswer(String ans){
+		answer = ans;
+	}
+}
