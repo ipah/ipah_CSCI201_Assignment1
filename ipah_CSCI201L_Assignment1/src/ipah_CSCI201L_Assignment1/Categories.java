@@ -56,5 +56,8 @@ public class Categories {
 		}
 		return t_f;
 	}
+	public int getVecSize(){
+		return vec.size();
+	}
 		
 }
