@@ -1,5 +1,5 @@
-Baseball::Basketball::Football::Tennis::Volleyball
-200::400::600::800::1000
+Baseball::Basketball::Football::Tennis::Volleyball::images/catBg.jpeg
+200::400::600::800::1000::images/blueBackground.jpg::images/disabledBG.jpg
 ::Baseball::200::The record for most World Series titles belongs to the Big Apple. With so much prestige, you would think Jimmy Fallon would have the decency not to use this team's branded toilet paper.::New York Yankees
 ::Baseball::400::If someone hits a single, a double, a triple, and a home run all in one game, he has hit for this.::Cycle
 ::Baseball::600::The Boys in Blue play their home games at the Chavez Ravine. They're better known as this team.::Los Angeles Dodgers
@@ -26,3 +26,5 @@ Baseball::Basketball::Football::Tennis::Volleyball
 ::Volleyball::200::There are several ways to hit a volleyball. These include serve, bump, set, and this. For an opponent, it can be as painful as the name suggests.::Spike
 ::Volleyball::400::This host country swept Men's Volleyball in the 2016 Summer Olympics, winning gold on the beach and indoors.::Brazil
 ::FJ::USC Trojan Swimmer Katinka Hosszu brought home three gold medals and one silver from the 2016 Summer Olympics for this country.::Hungary
+19
+50

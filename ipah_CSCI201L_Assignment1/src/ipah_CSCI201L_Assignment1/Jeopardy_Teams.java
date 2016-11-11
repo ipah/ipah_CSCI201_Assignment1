@@ -1,6 +1,9 @@
 package ipah_CSCI201L_Assignment1;
 
-public class Jeopardy_Teams {
+import java.io.Serializable;
+
+public class Jeopardy_Teams implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String team_bet;//amount that team bets for FJ
 	private String team_name;
 	private int team_score = 0;

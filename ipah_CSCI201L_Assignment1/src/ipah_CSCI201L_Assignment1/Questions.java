@@ -1,8 +1,10 @@
 package ipah_CSCI201L_Assignment1;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Questions {
+public class Questions implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String score;
 	private String question;
 	private String answer;

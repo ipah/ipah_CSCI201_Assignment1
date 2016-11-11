@@ -1,0 +1,6 @@
+Category Background image: images/catBg.jpeg
+Enabled Button Background Image: images/blueBackground.jpg
+Disabled Button Background image: images/disabledBG.jpg
+
+
+NOTE: Login credentials are written to the users.txt file w/in my src folder.

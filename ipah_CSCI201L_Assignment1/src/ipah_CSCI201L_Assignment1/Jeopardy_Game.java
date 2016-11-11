@@ -1,8 +1,16 @@
 package ipah_CSCI201L_Assignment1;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -10,10 +18,14 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 
 
-public class Jeopardy_Game  {
+
+public class Jeopardy_Game implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
 	private int numberOfTeams = 1;
 	private String fileName; 
 	private int numberOfQuestionsAsked = 0; // counts number of questions asked so far.
@@ -23,6 +35,69 @@ public class Jeopardy_Game  {
 	
 	private FinalJeopardyQuestion fj = new FinalJeopardyQuestion();
 	
+	//private ImageIcon catBG, bttnEnabled, bttnDisabled; //background images for buttons
+//	private Vector<ImageIcon> imageHolder = new Vector<ImageIcon>(); //holds images
+	private Vector<String> imageHolder = new Vector<String>();
+	private int lineCount = 0;
+	private int _numRates, totRates;
+	private Vector<String> teamNames; 
+	private String gameType;
+	
+	ArrayList<String> fileLines; //saves lines of file
+	
+	
+	
+	public boolean isFJCorrect(String ans){
+		String[] answer = ans.toLowerCase().split(" ");
+		
+		if( answer[0].toLowerCase().equals("who") || answer[0].toLowerCase().equals("what") || answer[0].toLowerCase().equals("where") || answer[0].toLowerCase().equals("when")){
+			
+			if( (answer[1].toLowerCase().equals("is") || answer[1].toLowerCase().equals("are")) && (answer[2].toLowerCase().equals("the") || answer[2].toLowerCase().equals("a")) ){ //if "the" article is needed
+			
+				String [] subarray = Arrays.copyOfRange(answer, 3, answer.length);
+				String [] qArray = fj.getFJAnswer().toLowerCase().split(" ");
+			
+				if(Arrays.equals(qArray, subarray)){
+					/*team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
+					System.out.println("Correct!");*/
+					return true;
+				}
+				else{
+					/*System.out.println("Incorrect!");
+					team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));*/
+					return false;
+				}
+				//FinalJeopardy();
+			}
+			else{
+				String [] subarray = Arrays.copyOfRange(answer, 2, answer.length);
+				String [] qArray = fj.getFJAnswer().toLowerCase().split(" ");
+				/*for(int i = 0; i < questArray.length; i++){
+					System.out.print("filr: "+ questArray[i]);
+				}
+				
+				for(int i = 0; i < answer.length; i++){
+					System.out.print("filr: "+ answer[i]);
+				}*/
+				if(Arrays.equals(subarray,  qArray)){
+					/*team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
+					System.out.println("Correct!");*/
+					return true;
+				}
+				else{
+					/*System.out.println("Incorrect!");
+					team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));*/
+					return false;
+				}
+			
+			}
+		}
+		
+		return false;
+		
+		
+		
+	}
 	//THIS FUNCTION CHECKS IF THE GIVEN ANSWER IS CORRECT
 	public boolean isCorrect(String userAnswer, String correctAnswer){
 		
@@ -72,381 +147,76 @@ public class Jeopardy_Game  {
 				}
 			}
 		}
-		/*
-		else if(Arrays.equals(questArray, answer) ){//if they dont put in form of question
-			System.out.println("Please enter answer again in the correct format.");
-			String [] second = response.nextLine().toLowerCase().split(" ");
-			if( second[0].toLowerCase().equals("who") || second[0].toLowerCase().equals("what") || second[0].toLowerCase().equals("where") || second[0].toLowerCase().equals("when")){
-				if( (second[1].toLowerCase().equals("is") || second[1].toLowerCase().equals("are")) &&(second[2].toLowerCase().equals("the") || second[2].toLowerCase().equals("a"))){ //if "the"/ "a" article is needed
-					String [] subarray = Arrays.copyOfRange(second, 3, second.length);
-					String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-					
-					
-					if(Arrays.equals(subarray, qArray)){
-						team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-						System.out.println("Correct!");
-					}
-					else{
-						System.out.println("Incorrect!");
-						team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-					}
-				}
-				else{//cases when there is no "the" article
-					String [] subarray = Arrays.copyOfRange(second, 2, second.length);
-					String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-					for(int i = 0; i < qArray.length; i++){
-						System.out.print("file: "+ qArray[i]);
-					}
-					
-
-					
-					if(Arrays.equals(subarray, qArray)){
-						team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-						System.out.println("Correct!");
-					}
-					else{
-						System.out.println("Incorrect!");
-						team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-					}
-				}
-			}
-			else{ //incorrect format for the second time
-				System.out.println("Incorrect!");
-				team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-				
-			}
-		}*/
+		
 		else{//go to next team
-			/*
-			System.out.println("Incorrect!");
-			team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));//subtract points from their score
-			*/
+			
 			return false; 
 		}
-	//}
-		//System.out.println(current_team);
-		/*	
-		if( current_team == numberOfTeams - 1){
-			current_team = 0;
-		}
-		else{
-			current_team++;
-		}
-		
-		/*System.out.println("Team " + team_holder.get(current_team).getName() +"'s turn.");
-		if(allQuestionsFinished()){
-			break; 
-		}*/
-}//end of while loop
+	
+	}
 
 	
-	
-	
-	
-	
-	
-	public Jeopardy_Game(String file) throws FileNotFoundException{//displays first prompts
-		fileName = file;
-		File_reader(fileName);
+	public void updateFile() throws IOException{
+		fileLines = new ArrayList<String>();
+		File f = new File(fileName);
+		Scanner input = new Scanner(f);
+		while(input.hasNextLine()){
+			String line = input.nextLine();
+			fileLines.add(line);
+		}
 		
-		//System.out.println("in: " + numOfTeams);
-		System.out.println("WHAT'S HAPPENING?");
+		fileLines.set(28,Integer.toString(getNumOfRate())); 
+		fileLines.set(29,Integer.toString(getTotRate()));
+		
+		
+		//WRITE TO FILE
+		
+		FileOutputStream oos = new FileOutputStream(fileName);
+		BufferedWriter br = new BufferedWriter( new OutputStreamWriter(oos));
+			
+		for(int i = 0; i < fileLines.size(); i++){
+			
+			br.write(fileLines.get(i));
+			br.newLine();	
+			br.flush();
+			
+			
+		}
+		
+		br.close();
+		oos.close();
+			
+		
+		
+		
+	}
+	
+	
+	public Jeopardy_Game(String file) throws FileNotFoundException{
+		File_reader(file);
+	}
+	
+	public Jeopardy_Game(String file, Vector<String> tNames, String gameType) throws FileNotFoundException{//displays first prompts
+		fileName = file;
+		teamNames = new Vector<String>();
+		
+		teamNames = tNames; 
+		this.gameType = gameType;
+		File_reader(fileName);
 
 		
 		Scanner response = new Scanner(System.in);
-		
-		
-		
-		//System.out.println("Please enter the number of teams that will be playing this game.");
-				
-		//System.out.println("in2: " + numberOfTeams);
+	
 		String num_teams; 
 		
-	/*	num_teams= response.nextLine();
-		if(num_teams.toLowerCase().equals("exit")){
-			exit();
-		}
-		if(num_teams.toLowerCase().equals("replay")){
-			replay();
-		}
-			
-		while(!num_teams.equals("1") && !num_teams.equals("2") && !num_teams.equals("3") && !num_teams.equals("4") ){
-			
-			System.out.println("Please enter a valid number of teams.");
-			
-			System.out.println("Please enter the number of teams that will be playing this game.");
-			//response = new Scanner(System.in);
-			num_teams = response.nextLine();
-			if(num_teams.toLowerCase().equals("exit")){
-				exit();
-			}
-			if(num_teams.toLowerCase().equals("replay")){
-				replay();
-			}
-			
-			
-		}
-					
-		System.out.println("There are " + numberOfTeams + " teams playing Jeopardy.");
-		//System.out.println("teams.getValue(): " + teams.getValue());
-		//int team_integer = Integer.parseInt(num_teams);
-		//setNumOfTeams(team_integer);
-				
-		String name;*/
-		//numberofteams is 0 at this point, figure out why
-		
-		//System.out.println( numberOfTeams);
-		/*
-		for(int i = 1; i <numberOfTeams+1; i++){
-			
-			System.out.println("Please choose a name for Team " + i + ".");
-			
-			name = response.nextLine();
-			if(name.toLowerCase().equals("exit")){
-				exit();
-			}
-			if(name.toLowerCase().equals("replay")){
-				replay();
-			}
-			
-			
-			
-			addTeamToGame(name);
-			
-			
-			System.out.println("Team " + i+ " your name is: " + name);
-			
-			
-			
-				
-			}
+
+	}
 	
-		for( int i = 0; i < numberOfTeams; i++){
-			addTeamToGame(textFieldHolder.get(i).getText());
-			System.out.println("Team name: " +textFieldHolder.get(i).getText());
-		}
-		
-		//randomly chooses which team will start first
-		Random random = new Random();
-		int current_team;
-		if( numberOfTeams ==1){
-			current_team = 0;
-		}
-		else{
-			current_team= random.nextInt(numberOfTeams) ; // team that will start first
-		}
-		String choice;
-		String dollars;
-		//System.out.println("first" + current_team);
-		//System.out.println("Team " + team_holder.get(current_team).getName() + "'s turn.");		//ask first team their question
-		while( (current_team < numberOfTeams) || numberOfTeams == 1){
-			
-			System.out.println("Please choose a category: ");
-			choice = response.nextLine();
-			if(choice.toLowerCase().equals("exit")){
-				exit();
-			}
-			if(choice.toLowerCase().equals("replay")){
-				replay();
-			}
-			while(!isCategory(choice)){
-				System.out.println("Invalid category. Please enter another.");
-				choice = response.nextLine();
-				if(choice.toLowerCase().equals("exit")){
-					exit();
-				}
-				if(choice.toLowerCase().equals("replay")){
-					replay();
-				}
-
-			}
-			
-			System.out.println("Please enter the dollar value of the question you wish to answer: ");
-			dollars = response.nextLine();
-			if(dollars.toLowerCase().equals("exit")){
-				exit();
-			}
-			if(dollars.toLowerCase().equals("replay")){
-				replay();
-			}
-
-			
-			while(!isScore(dollars)){
-				System.out.println("Invalid dollar amount. Please enter another.");
-				dollars = response.nextLine();
-				if(choice.toLowerCase().equals("exit")){
-					exit();
-				}
-				if(dollars.toLowerCase().equals("replay")){
-					replay();
-				}
-
-			}
-			
-			
-			
-			while(getCategory(choice).getQuestion(dollars).questionUsed() == true){ // if question has been asked
-				System.out.println("Sorry, question has already been asked.");
-				
-				System.out.println("Please choose a category: ");
-				choice = response.nextLine();
-				if(choice.toLowerCase().equals("exit")){
-					exit();
-				}
-				if(choice.toLowerCase().equals("replay")){
-					replay();
-					continue;
-				}
-
-				while(!isCategory(choice)){
-					System.out.println("Invalid category. Please enter another.");
-					choice = response.nextLine();
-					if(choice.toLowerCase().equals("exit")){
-						exit();
-					}
-					if(choice.toLowerCase().equals("replay")){
-						replay();
-						continue;
-					}
-
-				}
-				
-				System.out.println("Please enter the dollar value of the question you wish to answer: ");
-				dollars = response.nextLine();
-				if(dollars.toLowerCase().equals("exit")){
-					exit();
-				}
-				if(dollars.toLowerCase().equals("replay")){
-					replay();
-					continue;
-				}
-
-				while(!isScore(dollars)){
-					System.out.println("Invalid dollar amount. Please enter another.");
-					dollars = response.nextLine();
-					if(dollars.toLowerCase().equals("exit")){
-						exit();
-					}
-					if(dollars.toLowerCase().equals("replay")){
-						replay();
-					}
-				}
-			}
-						
-						
-						
-				//hasnt been asked, then ask
-			getCategory(choice).askQ(dollars); //asks question
-			getCategory(choice).getQuestion(dollars).asked(); // marks as asked
-			
-			String[] answer = response.nextLine().toLowerCase().split(" ");
-			
-			
-			String [] questArray = 	getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-			
-			if( answer[0].toLowerCase().equals("who") || answer[0].toLowerCase().equals("what") || answer[0].toLowerCase().equals("where") || answer[0].toLowerCase().equals("when")){
-				
-				if( (answer[1].toLowerCase().equals("is") || answer[1].toLowerCase().equals("are")) && (answer[2].toLowerCase().equals("the") || answer[2].toLowerCase().equals("a")) ){ //if "the" article is needed
-				
-					String [] subarray = Arrays.copyOfRange(answer, 3, answer.length);
-					String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-					
-					if(Arrays.equals(qArray, subarray)){
-						team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-						System.out.println("Correct!");
-					}
-					else{
-						System.out.println("Incorrect!");
-						team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-					}
-					//FinalJeopardy();
-				}
-				else{
-					String [] subarray = Arrays.copyOfRange(answer, 2, answer.length);
-					String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-					for(int i = 0; i < questArray.length; i++){
-						System.out.print("filr: "+ questArray[i]);
-					}
-					
-					for(int i = 0; i < answer.length; i++){
-						System.out.print("filr: "+ answer[i]);
-					}
-					if(Arrays.equals(subarray,  qArray)){
-						team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-						System.out.println("Correct!");
-					}
-					else{
-						System.out.println("Incorrect!");
-						team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-					}
-				}
-			}
-			
-			else if(Arrays.equals(questArray, answer) ){//if they dont put in form of question
-				System.out.println("Please enter answer again in the correct format.");
-				String [] second = response.nextLine().toLowerCase().split(" ");
-				if( second[0].toLowerCase().equals("who") || second[0].toLowerCase().equals("what") || second[0].toLowerCase().equals("where") || second[0].toLowerCase().equals("when")){
-					if( (second[1].toLowerCase().equals("is") || second[1].toLowerCase().equals("are")) &&(second[2].toLowerCase().equals("the") || second[2].toLowerCase().equals("a"))){ //if "the"/ "a" article is needed
-						String [] subarray = Arrays.copyOfRange(second, 3, second.length);
-						String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-						
-						
-						if(Arrays.equals(subarray, qArray)){
-							team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-							System.out.println("Correct!");
-						}
-						else{
-							System.out.println("Incorrect!");
-							team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-						}
-					}
-					else{//cases when there is no "the" article
-						String [] subarray = Arrays.copyOfRange(second, 2, second.length);
-						String [] qArray = getCategory(choice).getQuestion(dollars).getAnswer().toLowerCase().split(" ");
-						for(int i = 0; i < qArray.length; i++){
-							System.out.print("file: "+ qArray[i]);
-						}
-						
-	
-						
-						if(Arrays.equals(subarray, qArray)){
-							team_holder.get(current_team).changeScore(Integer.parseInt(dollars));
-							System.out.println("Correct!");
-						}
-						else{
-							System.out.println("Incorrect!");
-							team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-						}
-					}
-				}
-				else{ //incorrect format for the second time
-					System.out.println("Incorrect!");
-					team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));
-					
-				}
-			}
-			else{//go to next team
-				
-				System.out.println("Incorrect!");
-				team_holder.get(current_team).changeScore((-1)*Integer.parseInt(dollars));//subtract points from their score
-				
-			}
-		//}
-			//System.out.println(current_team);
-				
-			if( current_team == numberOfTeams - 1){
-				current_team = 0;
-			}
-			else{
-				current_team++;
-			}
-			
-			System.out.println("Team " + team_holder.get(current_team).getName() +"'s turn.");
-			if(allQuestionsFinished()){
-				break; 
-			}
-		}//end of while loop
-		FinalJeopardy();*/
+	public Vector<String> getTeamNames(){
+		return teamNames;
+	}
+	public String getGameType(){
+		return gameType;
 	}
 	//FINAL JEOPARDY
 	public void FinalJeopardy(){
@@ -507,17 +277,26 @@ public class Jeopardy_Game  {
 	public String winner(){
 		int max = team_holder.get(0).getScore();
 		int maxIndex=0;
-		for(int i = 0; i < team_holder.size(); i++){
-			if(team_holder.get(i).getScore() >= max){
+		int smScrIndx= 0;
+		for(int i = 1; i < team_holder.size(); i++){
+			if(team_holder.get(i).getScore() > max){
 				max = team_holder.get(i).getScore();
 				maxIndex = i;
+				//System.out.println("maxScr: " + team_holder.get(0).getScore());
+				//System.out.println("maxTeam: " + team_holder.get(0).getName());
+				//System.out.println("maxScr index: " + i);
 			}
-			if( team_holder.get(i).getScore() == max ){
+			else if( team_holder.get(i).getScore() == max ){
 				//TODO when there is a tie
-				return (team_holder.get(maxIndex).getName() +" your score is: "+ team_holder.get(i).getScore());
+				smScrIndx = i;
+				//return (team_holder.get(maxIndex).getName() );
 			}
 		}
-		return (team_holder.get(maxIndex).getName() +" your score is: " + team_holder.get(maxIndex).getScore() );
+		
+		if(team_holder.get(smScrIndx).getScore() == max){
+			return ("There are no winners.");
+		}
+		return (team_holder.get(maxIndex).getName()  );
 			
 	}
 	public boolean isBetValid(Jeopardy_Teams team, int bet){
@@ -526,34 +305,76 @@ public class Jeopardy_Game  {
 		}
 		return false;
 	}
-
+	
+	public void setNumOfRate(int numRates){
+		_numRates = numRates;
+		
+	}
+	public void setTotRate(int tot){
+		totRates = tot;
+	}
+	
+	public void incToNumOfRates(){ //increases of raters
+		_numRates++;
+	}
+	
+	public void addRating(int rate){ //adds players rating 
+		totRates += rate;
+	}
+	public int getNumOfRate(){
+		return _numRates;
+	}
+	public int getTotRate(){
+		return totRates; 
+	}
+	public String getAvg(){
+		int avg = (totRates/_numRates);
+		String s = Integer.toString(avg);
+		return (s+"/5");
+	}
 	//FILE READER	
 	public void File_reader(String fileName) throws FileNotFoundException{
 		//Scanner scanner = new Scanner(System.in);
 	
 		File f = new File(fileName);
 		Scanner scanner = new Scanner(f);
+		
+		
+		
+		
+		
+		
 		String[] catSplit;
 		String[] srcSplit; 
 		//Reads and stores categories
 		catSplit = scanner.nextLine().split("::");
 		
-		if(catSplit.length < 5){
-			System.out.println("ERROR: Invalid file format. Not enough data in this section.");
+		
+		
+		if(catSplit.length < 6){
+			System.out.println("here " +catSplit.length);
+			System.out.println("(not enough categories)ERROR: Invalid file format. Not enough data in this section.");
 			scanner.close();
 			System.exit(0);
 		}
-		else if(catSplit.length > 5){
+		else if(catSplit.length > 6){
 			System.out.println("ERROR:Invalid file format. Too much data in this section.");
 			scanner.close();
 			System.exit(0);
 		}
 		else{
 			for(int i =0; i< catSplit.length; i++){
-				catStringName.add(catSplit[i]); //saves string version of categories
-				Categories new_cat = new Categories(catSplit[i]); 
-				categories.addElement(new_cat); 
+				if( i == 5){
+					//catBG = new ImageIcon(catSplit[i]);
+					imageHolder.add(catSplit[i]);
+				}
+				else{
+					catStringName.add(catSplit[i]); //saves string version of categories
+					Categories new_cat = new Categories(catSplit[i]); 
+					categories.addElement(new_cat); 
+				}
 			}
+			lineCount++;
 		}
 		
 		
@@ -567,21 +388,34 @@ public class Jeopardy_Game  {
 		//Reads and stores points
 		srcSplit = scanner.nextLine().split("::");
 	
-		if(srcSplit.length < 5){
-			System.out.println("ERROR: Invalid file format. Not enough data in this section.");
+		if(srcSplit.length < 7){
+			System.out.println("(not enough pts)ERROR: Invalid file format. Not enough data in this section.");
 			scanner.close();
 			System.exit(0);
 		}
-		else if(srcSplit.length > 5){
+		else if(srcSplit.length > 7){
 			System.out.println("ERROR:Invalid file format. Too much data in this section.");
 			scanner.close();
 			System.exit(0);
 		}
 		else{
 			for(int i =0; i< srcSplit.length; i++){
-				pointVals.add(srcSplit[i]);
+				if(i == 5 ){
+					/*bttnEnabled = new ImageIcon(srcSplit[i]);
+					imageHolder.add(bttnEnabled);*/
+					imageHolder.add(srcSplit[i]);
+				}
+				else if(i == 6){
+					//bttnDisabled = new ImageIcon(srcSplit[i]);
+					imageHolder.add(srcSplit[i]);
+				}
+				else{
+					pointVals.add(srcSplit[i]);
+				}
 				
 			}
+			
+			lineCount++;
 		}
 		for(int i = 0; i < srcSplit.length; i++){
 			if(srcSplit[i].equals("") || srcSplit[i].equals(" ")){
@@ -594,11 +428,21 @@ public class Jeopardy_Game  {
 		while(scanner.hasNextLine()){
 			String[] split = scanner.nextLine().split("::");
 			//split[1] = category; 2 = score; 3 = question; 4 = answer
-			/*System.out.println(split.length);
-			for( int i = 0; i < split.length; i++){
-				System.out.println(split[i]);
-			}*/
-			if(split[1].equals("FJ")  ){// final Jeopardy 
+			
+			if(split.length == 1){
+				if(lineCount == 29){
+					setNumOfRate(Integer.parseInt(split[0]));
+					
+					
+				}
+				
+				if(lineCount == 30){
+					setTotRate(Integer.parseInt(split[0]));
+				}
+			}
+			
+			
+			else if(split[1].equals("FJ")  ){// final Jeopardy 
 				//create final jeopardy question
 				/*Categories finalJ = new Categories(split[1]);
 				categories.addElement(finalJ);
@@ -606,7 +450,7 @@ public class Jeopardy_Game  {
 				fj.makeFJQuest(split[2],split[3]);
 				getCategory(split[1]).addQuestions(fj);	*/
 				if(split.length < 4){
-					System.out.println("ERROR: Invalid file format. Not enough data in this section.");
+					System.out.println("(FJQ)ERROR: Invalid file format. Not enough data in this section.");
 					scanner.close();
 					System.exit(0);
 				}
@@ -617,9 +461,10 @@ public class Jeopardy_Game  {
 				}
 				fj.setFJQuestion(split[2]);
 				fj.setFJAnswer(split[3]);
+				lineCount++;
 			}	
 			else if(split.length < 5){
-				System.out.println("ERROR: Invalid file format. Not enough data in this section.");
+				System.out.println("(reading lines w/ questions)ERROR: Invalid file format. Not enough data in this section.");
 				scanner.close();
 				System.exit(0);
 			}
@@ -635,20 +480,21 @@ public class Jeopardy_Game  {
 					System.exit(0);
 				}
 			}
-			if( isCategory(split[1])  && isScore(split[2]) ){
+			if( (split.length!=1) && isCategory(split[1])  && isScore(split[2]) ){
 				//System.out.println(split[1]);				//then should make question
 				Questions q = new Questions();
 				q.makeQuestions(split[2], split[3], split[4]);
 				getCategory(split[1]).addQuestions(q); 
 			}
 			
-			
+			lineCount++;
 			
 		}//end of while loop.	
 		
 		for(int i = 0; i < categories.size(); i++){
 			if(categories.get(i).getVecSize() < 5){
-				System.out.println("ERROR: Incorrect file format. There are not enough questions present.Cannot play game.");
+				System.out.println(i + ": " +categories.get(i).getVecSize());
+				System.out.println("(not enough categories)ERROR: Incorrect file format. There are not enough questions present.Cannot play game.");
 				System.exit(0);
 			}
 			else if(categories.get(i).getVecSize() > 5){
@@ -681,6 +527,7 @@ public class Jeopardy_Game  {
 		new_team.setName(name);
 		team_holder.addElement(new_team);
 		
+		
 	}
 	public void printAll(){
 		for(int i =0; i < numberOfTeams; i++){
@@ -704,9 +551,13 @@ public class Jeopardy_Game  {
 		return false;
 	}
 	
+	public void resetNumQuestionsAsked(){
+		numberOfQuestionsAsked = 0;
+	}
+	
 	public void incrementQuestionsAsked(){
 		numberOfQuestionsAsked++;
-		System.out.println("in function " + numberOfQuestionsAsked);
+		
 	}
 
 	public boolean categoryFinished(String c){ //checks to see if there are available questions in category
@@ -779,6 +630,15 @@ public class Jeopardy_Game  {
 		}
 	}
 	
+	public void clear(){
+		numberOfTeams = 1; 
+		team_holder.clear();
+		fileName = "";
+		categories.clear();
+		pointVals.clear();
+		resetNumQuestionsAsked();
+	}
+	
 	public Vector<Jeopardy_Teams> getTeamHolder(){
 		return team_holder;
 	}
@@ -788,6 +648,15 @@ public class Jeopardy_Game  {
 	}
 	public ArrayList<String> getCatStringName(){
 		return catStringName;
+	}
+	
+	public Vector<String> getImages(){
+		return imageHolder; 
+	}
+	
+	public String getFile(){
+		File f = new File(fileName);
+		return fileName;
 	}
 	
 	

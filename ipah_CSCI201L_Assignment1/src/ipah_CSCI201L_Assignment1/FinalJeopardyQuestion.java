@@ -1,6 +1,9 @@
 package ipah_CSCI201L_Assignment1;
 
-public class FinalJeopardyQuestion {
+import java.io.Serializable;
+
+public class FinalJeopardyQuestion implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String question; 
 	private String answer;
 	
